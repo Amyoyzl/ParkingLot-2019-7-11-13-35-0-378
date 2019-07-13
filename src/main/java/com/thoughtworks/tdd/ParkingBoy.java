@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ParkingBoy {
@@ -12,7 +13,7 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
-    public ParkingTicket parkCar(Car car) {
+    public ParkingTicket parkCarByOrder(Car car) {
         for (int i = 0; i < parkingLots.size(); i++) {
             int position = parkingLots.get(i).add(car);
             if (position >= 0) {
@@ -21,6 +22,28 @@ public class ParkingBoy {
         }
         parkingMessage = "Not enough position.";
         return null;
+    }
+
+    public ParkingTicket parkCarByCapacity(Car car) {
+        int index = indexOfMaxCapacity();
+        if(index < 0) {
+            parkingMessage = "Not enough position.";
+            return null;
+        }
+        return new ParkingTicket(parkingLots.get(index).add(car), index);
+    }
+
+    private int indexOfMaxCapacity() {
+        int max = 0;
+        int index = -1;
+        for (int i = 0; i < parkingLots.size(); i++) {
+            int capacity = parkingLots.get(i).getAvailableCapacity();
+            if(capacity > max) {
+                max = capacity;
+                index = i;
+            }
+        }
+        return index;
     }
 
     public Car fetchCar(ParkingTicket parkingTicket) {
