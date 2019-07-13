@@ -79,8 +79,8 @@ public class ParkingBoyTest {
     }
 
     @Test
-    @DisplayName("should return no parkingTicket when parkingBoy fetch car has no position in parkingLot")
-    public void should_return_no_parkingTicket_when_parkingBoy_fetch_car_has_no_position_in_parkingLot() {
+    @DisplayName("should return no parkingTicket when parkingBoy park car has no position in parkingLot")
+    public void should_return_no_parkingTicket_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         Car car1 = new Car();
         Car car2 = new Car();
@@ -127,5 +127,47 @@ public class ParkingBoyTest {
         assertNull(fetchCar);
         assertThat(parkingMessage, is("Please provide your parking ticket."));
     }
+
+    @Test
+    @DisplayName("should return no position message ticket message when parkingBoy park car has no position in parkingLot")
+    public void should_return_no_position_message_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
+        // given
+        Car car1 = new Car();
+        Car car2 = new Car();
+        Car car3 = new Car();
+        Car car4 = new Car();
+        Car car5 = new Car();
+        Car car6 = new Car();
+        Car car7 = new Car();
+        Car car8 = new Car();
+        Car car9 = new Car();
+        Car car10 = new Car();
+        Car car11 = new Car();
+
+        // when
+        parkingBoy.parkCar(car1);
+        parkingBoy.parkCar(car2);
+        parkingBoy.parkCar(car3);
+        parkingBoy.parkCar(car4);
+        parkingBoy.parkCar(car5);
+        parkingBoy.parkCar(car6);
+        parkingBoy.parkCar(car7);
+        parkingBoy.parkCar(car8);
+        ParkingTicket parkingTicket9 = parkingBoy.parkCar(car9);
+        ParkingTicket parkingTicket10 = parkingBoy.parkCar(car10);
+        ParkingTicket parkingTicket11 = parkingBoy.parkCar(car11);
+        String parkingMessage = parkingBoy.getParkingMessage();
+        Car fetchCar9 = parkingBoy.fetchCar(parkingTicket9);
+        Car fetchCar10 = parkingBoy.fetchCar(parkingTicket10);
+
+        // then
+        assertThat(fetchCar9, is(car9));
+        assertThat(fetchCar10, is(car10));
+        assertNull(parkingTicket11);
+        assertThat(parkingMessage, is("Not enough position."));
+
+    }
+
+
 
 }
