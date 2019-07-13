@@ -12,7 +12,10 @@ public class ParkingBoy {
         return parkingLot.add(car);
     }
 
-    public Car fetch(ParkingTicket parkingTicket) {
+    public Car fetchCar(ParkingTicket parkingTicket) {
+        if (parkingTicket == null) {
+            return null;
+        }
         return parkingLot.push(parkingTicket);
     }
 }

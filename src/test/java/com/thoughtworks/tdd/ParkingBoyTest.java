@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,10 +20,11 @@ public class ParkingBoyTest {
 
         // when
         ParkingTicket parkingTicket = parkingBoy.parkCar(car);
-        Car fetchCar = parkingBoy.fetch(parkingTicket);
+        Car fetchCar = parkingBoy.fetchCar(parkingTicket);
 
         // then
         assertThat(fetchCar, is(car));
+
     }
 
     @Test
@@ -35,12 +37,25 @@ public class ParkingBoyTest {
         // when
         ParkingTicket parkingTicket1 = parkingBoy.parkCar(car1);
         ParkingTicket parkingTicket2 = parkingBoy.parkCar(car2);
-        Car fetchCar1 = parkingBoy.fetch(parkingTicket1);
-        Car fetchCar2 = parkingBoy.fetch(parkingTicket2);
+        Car fetchCar1 = parkingBoy.fetchCar(parkingTicket1);
+        Car fetchCar2 = parkingBoy.fetchCar(parkingTicket2);
 
         // then
         assertThat(fetchCar1, is(car1));
         assertThat(fetchCar2, is(car2));
+    }
+
+    @Test
+    @DisplayName("should return no car when parkingBoy fetch cars given wrong parkingTicket")
+    public void should_return_no_car_when_parkingBoy_fetch_cars_given_wrong_parkingTicket() {
+        // given
+        ParkingTicket parkingTicket = new ParkingTicket(3);
+
+        // when
+        Car fetchCar = parkingBoy.fetchCar(parkingTicket);
+
+        // then
+        assertNull(fetchCar);
     }
 
 }

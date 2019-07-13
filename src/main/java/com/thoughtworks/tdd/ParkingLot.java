@@ -19,6 +19,10 @@ public class ParkingLot {
     }
 
     public Car push(ParkingTicket parkingTicket) {
-        return cars.get(parkingTicket.getId());
+        int id = parkingTicket.getId();
+        if (id >= 0 && id < cars.size()) {
+            return cars.get(parkingTicket.getId());
+        }
+        return null;
     }
 }
