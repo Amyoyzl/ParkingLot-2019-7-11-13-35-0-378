@@ -3,14 +3,22 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ParkingBoyTest {
 
-    ParkingLot parkingLot = new ParkingLot(10);
-    private ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+    ParkingBoy parkingBoy;
+    public ParkingBoyTest () {
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(new ParkingLot(10));
+        parkingLots.add(new ParkingLot(10));
+        parkingBoy = new ParkingBoy(parkingLots);
+    }
 
     @Test
     @DisplayName("should return a car when parkingBoy fetch car given parkingTicket")
@@ -49,7 +57,7 @@ public class ParkingBoyTest {
     @DisplayName("should return no car when parkingBoy fetch car given wrong parkingTicket")
     public void should_return_no_car_when_parkingBoy_fetch_car_given_wrong_parkingTicket() {
         // given
-        ParkingTicket parkingTicket = new ParkingTicket(3);
+        ParkingTicket parkingTicket = new ParkingTicket(3, 0);
 
         // when
         Car fetchCar = parkingBoy.fetchCar(parkingTicket);
@@ -82,37 +90,21 @@ public class ParkingBoyTest {
     @DisplayName("should return no parkingTicket when parkingBoy park car has no position in parkingLot")
     public void should_return_no_parkingTicket_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
-        Car car1 = new Car();
-        Car car2 = new Car();
-        Car car3 = new Car();
-        Car car4 = new Car();
-        Car car5 = new Car();
-        Car car6 = new Car();
-        Car car7 = new Car();
-        Car car8 = new Car();
-        Car car9 = new Car();
-        Car car10 = new Car();
-        Car car11 = new Car();
+        for (int i = 0; i < 19; i++) {
+            parkingBoy.parkCar(new Car());
+        }
+        Car car20 = new Car();
+        Car car21 = new Car();
 
         // when
-        parkingBoy.parkCar(car1);
-        parkingBoy.parkCar(car2);
-        parkingBoy.parkCar(car3);
-        parkingBoy.parkCar(car4);
-        parkingBoy.parkCar(car5);
-        parkingBoy.parkCar(car6);
-        parkingBoy.parkCar(car7);
-        parkingBoy.parkCar(car8);
-        ParkingTicket parkingTicket9 = parkingBoy.parkCar(car9);
-        ParkingTicket parkingTicket10 = parkingBoy.parkCar(car10);
-        ParkingTicket parkingTicket11 = parkingBoy.parkCar(car11);
-        Car fetchCar9 = parkingBoy.fetchCar(parkingTicket9);
-        Car fetchCar10 = parkingBoy.fetchCar(parkingTicket10);
+        ParkingTicket parkingTicket20 = parkingBoy.parkCar(car20);
+        ParkingTicket parkingTicket21 = parkingBoy.parkCar(car21);
+        Car fetchCar20 = parkingBoy.fetchCar(parkingTicket20);
+        Car fetchCar21 = parkingBoy.fetchCar(parkingTicket21);
 
         // then
-        assertThat(fetchCar9, is(car9));
-        assertThat(fetchCar10, is(car10));
-        assertNull(parkingTicket11);
+        assertThat(fetchCar20, is(car20));
+        assertNull(parkingTicket21);
     }
 
     @Test
@@ -132,42 +124,43 @@ public class ParkingBoyTest {
     @DisplayName("should return no position message ticket message when parkingBoy park car has no position in parkingLot")
     public void should_return_no_position_message_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
-        Car car1 = new Car();
-        Car car2 = new Car();
-        Car car3 = new Car();
-        Car car4 = new Car();
-        Car car5 = new Car();
-        Car car6 = new Car();
-        Car car7 = new Car();
-        Car car8 = new Car();
-        Car car9 = new Car();
-        Car car10 = new Car();
-        Car car11 = new Car();
+        for (int i = 0; i < 19; i++) {
+            parkingBoy.parkCar(new Car());
+        }
+        Car car20 = new Car();
+        Car car21 = new Car();
 
         // when
-        parkingBoy.parkCar(car1);
-        parkingBoy.parkCar(car2);
-        parkingBoy.parkCar(car3);
-        parkingBoy.parkCar(car4);
-        parkingBoy.parkCar(car5);
-        parkingBoy.parkCar(car6);
-        parkingBoy.parkCar(car7);
-        parkingBoy.parkCar(car8);
-        ParkingTicket parkingTicket9 = parkingBoy.parkCar(car9);
-        ParkingTicket parkingTicket10 = parkingBoy.parkCar(car10);
-        ParkingTicket parkingTicket11 = parkingBoy.parkCar(car11);
+        ParkingTicket parkingTicket20 = parkingBoy.parkCar(car20);
+        ParkingTicket parkingTicket21 = parkingBoy.parkCar(car21);
         String parkingMessage = parkingBoy.getParkingMessage();
-        Car fetchCar9 = parkingBoy.fetchCar(parkingTicket9);
-        Car fetchCar10 = parkingBoy.fetchCar(parkingTicket10);
+        Car fetchCar20 = parkingBoy.fetchCar(parkingTicket20);
 
         // then
-        assertThat(fetchCar9, is(car9));
-        assertThat(fetchCar10, is(car10));
-        assertNull(parkingTicket11);
+        assertThat(fetchCar20, is(car20));
+        assertNull(parkingTicket21);
         assertThat(parkingMessage, is("Not enough position."));
 
     }
 
+    @Test
+    public void should_return_cars_when_parkingBoy_fetch_cars_in_parkingLots_given_parkingTicket() {
+        // given
+        for (int i = 0; i < 9; i++) {
+            parkingBoy.parkCar(new Car());
+        }
+        Car car10 = new Car();
+        Car car11 = new Car();
 
+        // when
+        ParkingTicket parkingTicket10 = parkingBoy.parkCar(car10);
+        ParkingTicket parkingTicket11 = parkingBoy.parkCar(car11);
+        Car fetchCar10 = parkingBoy.fetchCar(parkingTicket10);
+        Car fetchCar11 = parkingBoy.fetchCar(parkingTicket11);
+
+        // then
+        assertThat(fetchCar10, is(car10));
+        assertThat(fetchCar11, is(car11));
+    }
 
 }

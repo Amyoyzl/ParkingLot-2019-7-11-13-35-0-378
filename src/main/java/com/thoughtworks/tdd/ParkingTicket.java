@@ -2,15 +2,21 @@ package com.thoughtworks.tdd;
 
 public class ParkingTicket {
 
-    private int id;
+    private int position;
+    private int parkingLotId;
     private boolean use = false;
 
-    public ParkingTicket(int id) {
-        this.id = id;
+    public int getParkingLotId() {
+        return parkingLotId;
     }
 
-    public int getId() {
-        return id;
+    public ParkingTicket(int position, int parkingLotId) {
+        this.position = position;
+        this.parkingLotId = parkingLotId;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public boolean isUse() {

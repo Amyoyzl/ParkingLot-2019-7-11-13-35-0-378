@@ -11,27 +11,32 @@ public class ParkingLot {
         this.CAPACITY = capacity;
     }
 
-    public ParkingTicket add(Car car) {
-        if (cars.size() < CAPACITY) {
+    public int add(Car car) {
+        if (getAvailableCapacity() > 0) {
             if (cars.add(car)) {
-                return new ParkingTicket(cars.size() - 1);
+                return cars.size() - 1;
             }
         }
-        return null;
+        return -1;
     }
 
-    public Car push(ParkingTicket parkingTicket) {
-        if (isParkingTicketValid(parkingTicket)) {
-            return cars.get(parkingTicket.getId());
+    public int getAvailableCapacity() {
+        return CAPACITY - cars.size();
+    }
+
+    public Car push(int position) {
+        if (isParkingTicketValid(position)) {
+            return cars.get(position);
         }
         return null;
     }
 
-    public boolean isParkingTicketValid (ParkingTicket parkingTicket) {
-        int id = parkingTicket.getId();
-        if (id >= 0 && id < cars.size()) {
+    public boolean isParkingTicketValid (int position) {
+        if (position >= 0 && position < cars.size()) {
             return true;
         }
         return false;
     }
+
+
 }
