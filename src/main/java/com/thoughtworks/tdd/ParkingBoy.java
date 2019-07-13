@@ -16,6 +16,12 @@ public class ParkingBoy {
         if (parkingTicket == null) {
             return null;
         }
-        return parkingLot.push(parkingTicket);
+        if(!parkingTicket.isUse()) {
+            parkingTicket.setUse(true);
+            return parkingLot.push(parkingTicket);
+        }
+        else {
+            return null;
+        }
     }
 }

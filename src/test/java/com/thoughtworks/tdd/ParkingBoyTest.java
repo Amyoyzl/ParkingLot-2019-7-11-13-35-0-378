@@ -58,4 +58,20 @@ public class ParkingBoyTest {
         assertNull(fetchCar);
     }
 
+    @Test
+    @DisplayName("should return no car when parkingBoy fetch cars given used parkingTicket")
+    public void should_return_no_car_when_parkingBoy_fetch_cars_given_used_parkingTicket() {
+        // given
+        Car car = new Car();
+
+        // when
+        ParkingTicket parkingTicket = parkingBoy.parkCar(car);
+        Car fetchCar1 = parkingBoy.fetchCar(parkingTicket);
+        Car fetchCar2 = parkingBoy.fetchCar(parkingTicket);
+
+        // then
+        assertThat(fetchCar1, is(car));
+        assertNull(fetchCar2);
+    }
+
 }
