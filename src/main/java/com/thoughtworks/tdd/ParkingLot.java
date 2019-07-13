@@ -5,18 +5,20 @@ import java.util.List;
 
 public class ParkingLot {
     private final int CAPACITY;
-    private Car car;
+    private List<Car> cars = new ArrayList<>();
 
     public ParkingLot(int capacity) {
         this.CAPACITY = capacity;
     }
 
     public ParkingTicket add(Car car) {
-        this.car = car;
-        return new ParkingTicket();
+        if (cars.add(car)) {
+            return new ParkingTicket(cars.size() - 1);
+        }
+        return null;
     }
 
     public Car push(ParkingTicket parkingTicket) {
-        return this.car;
+        return cars.get(parkingTicket.getId());
     }
 }

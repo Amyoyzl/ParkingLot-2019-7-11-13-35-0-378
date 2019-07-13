@@ -25,4 +25,22 @@ public class ParkingBoyTest {
         assertThat(fetchCar, is(car));
     }
 
+    @Test
+    @DisplayName("should return cars when parkingBoy fetch cars given parkingTickets")
+    public void should_return_cars_when_parkingBoy_fetch_cars_given_parkingTickets() {
+        // given
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        // when
+        ParkingTicket parkingTicket1 = parkingBoy.parkCar(car1);
+        ParkingTicket parkingTicket2 = parkingBoy.parkCar(car2);
+        Car fetchCar1 = parkingBoy.fetch(parkingTicket1);
+        Car fetchCar2 = parkingBoy.fetch(parkingTicket2);
+
+        // then
+        assertThat(fetchCar1, is(car1));
+        assertThat(fetchCar2, is(car2));
+    }
+
 }
