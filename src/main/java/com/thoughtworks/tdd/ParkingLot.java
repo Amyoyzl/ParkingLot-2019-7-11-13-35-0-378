@@ -12,8 +12,10 @@ public class ParkingLot {
     }
 
     public ParkingTicket add(Car car) {
-        if (cars.add(car)) {
-            return new ParkingTicket(cars.size() - 1);
+        if (cars.size() < CAPACITY) {
+            if (cars.add(car)) {
+                return new ParkingTicket(cars.size() - 1);
+            }
         }
         return null;
     }
