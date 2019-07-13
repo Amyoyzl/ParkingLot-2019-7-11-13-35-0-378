@@ -13,8 +13,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ParkingBoyTest {
 
     ParkingBoy parkingBoy;
-    ParkingBoy smartParkingBoy;
-    ParkingBoy superSmartParkingBoy;
+    SmartParkingBoy smartParkingBoy;
+    SuperSmartParkingBoy superSmartParkingBoy;
 
     public ParkingBoyTest () {
         List<ParkingLot> parkingLots = new ArrayList<>();
@@ -25,12 +25,12 @@ public class ParkingBoyTest {
         parkingLots1.add(new ParkingLot(2));
         parkingLots1.add(new ParkingLot(2));
         parkingLots1.add(new ParkingLot(1));
-        smartParkingBoy = new ParkingBoy(parkingLots1);
+        smartParkingBoy = new SmartParkingBoy(parkingLots1);
         List<ParkingLot> parkingLots2 = new ArrayList<>();
         parkingLots2.add(new ParkingLot(4));
         parkingLots2.add(new ParkingLot(3));
         parkingLots2.add(new ParkingLot(3));
-        superSmartParkingBoy = new ParkingBoy(parkingLots2);
+        superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots2);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = parkingBoy.parkCarByOrder(car);
+        ParkingTicket parkingTicket = parkingBoy.parkCar(car);
         Car fetchCar = parkingBoy.fetchCar(parkingTicket);
 
         // then
@@ -56,8 +56,8 @@ public class ParkingBoyTest {
         Car car2 = new Car();
 
         // when
-        ParkingTicket parkingTicket1 = parkingBoy.parkCarByOrder(car1);
-        ParkingTicket parkingTicket2 = parkingBoy.parkCarByOrder(car2);
+        ParkingTicket parkingTicket1 = parkingBoy.parkCar(car1);
+        ParkingTicket parkingTicket2 = parkingBoy.parkCar(car2);
         Car fetchCar1 = parkingBoy.fetchCar(parkingTicket1);
         Car fetchCar2 = parkingBoy.fetchCar(parkingTicket2);
 
@@ -88,7 +88,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = parkingBoy.parkCarByOrder(car);
+        ParkingTicket parkingTicket = parkingBoy.parkCar(car);
         Car fetchCar1 = parkingBoy.fetchCar(parkingTicket);
         Car fetchCar2 = parkingBoy.fetchCar(parkingTicket);
         String parkingMessage = parkingBoy.getParkingMessage();
@@ -104,14 +104,14 @@ public class ParkingBoyTest {
     public void should_return_no_parkingTicket_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 19; i++) {
-            parkingBoy.parkCarByOrder(new Car());
+            parkingBoy.parkCar(new Car());
         }
         Car car20 = new Car();
         Car car21 = new Car();
 
         // when
-        ParkingTicket parkingTicket20 = parkingBoy.parkCarByOrder(car20);
-        ParkingTicket parkingTicket21 = parkingBoy.parkCarByOrder(car21);
+        ParkingTicket parkingTicket20 = parkingBoy.parkCar(car20);
+        ParkingTicket parkingTicket21 = parkingBoy.parkCar(car21);
         Car fetchCar20 = parkingBoy.fetchCar(parkingTicket20);
 
         // then
@@ -137,14 +137,14 @@ public class ParkingBoyTest {
     public void should_return_no_position_message_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 19; i++) {
-            parkingBoy.parkCarByOrder(new Car());
+            parkingBoy.parkCar(new Car());
         }
         Car car20 = new Car();
         Car car21 = new Car();
 
         // when
-        ParkingTicket parkingTicket20 = parkingBoy.parkCarByOrder(car20);
-        ParkingTicket parkingTicket21 = parkingBoy.parkCarByOrder(car21);
+        ParkingTicket parkingTicket20 = parkingBoy.parkCar(car20);
+        ParkingTicket parkingTicket21 = parkingBoy.parkCar(car21);
         String parkingMessage = parkingBoy.getParkingMessage();
         Car fetchCar20 = parkingBoy.fetchCar(parkingTicket20);
 
@@ -159,14 +159,14 @@ public class ParkingBoyTest {
     public void should_return_cars_when_parkingBoy_fetch_cars_in_parkingLots_given_parkingTicket() {
         // given
         for (int i = 0; i < 9; i++) {
-            parkingBoy.parkCarByOrder(new Car());
+            parkingBoy.parkCar(new Car());
         }
         Car car10 = new Car();
         Car car11 = new Car();
 
         // when
-        ParkingTicket parkingTicket10 = parkingBoy.parkCarByOrder(car10);
-        ParkingTicket parkingTicket11 = parkingBoy.parkCarByOrder(car11);
+        ParkingTicket parkingTicket10 = parkingBoy.parkCar(car10);
+        ParkingTicket parkingTicket11 = parkingBoy.parkCar(car11);
         Car fetchCar10 = parkingBoy.fetchCar(parkingTicket10);
         Car fetchCar11 = parkingBoy.fetchCar(parkingTicket11);
 
@@ -181,7 +181,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = smartParkingBoy.parkCarByCapacity(car);
+        ParkingTicket parkingTicket = smartParkingBoy.parkCar(car);
         Car fetchCar = smartParkingBoy.fetchCar(parkingTicket);
 
         // then
@@ -195,8 +195,8 @@ public class ParkingBoyTest {
         Car car2 = new Car();
 
         // when
-        ParkingTicket parkingTicket1 = smartParkingBoy.parkCarByCapacity(car1);
-        ParkingTicket parkingTicket2 = smartParkingBoy.parkCarByCapacity(car2);
+        ParkingTicket parkingTicket1 = smartParkingBoy.parkCar(car1);
+        ParkingTicket parkingTicket2 = smartParkingBoy.parkCar(car2);
         Car fetchCar1 = smartParkingBoy.fetchCar(parkingTicket1);
         Car fetchCar2 = smartParkingBoy.fetchCar(parkingTicket2);
 
@@ -225,7 +225,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = smartParkingBoy.parkCarByCapacity(car);
+        ParkingTicket parkingTicket = smartParkingBoy.parkCar(car);
         Car fetchCar1 = smartParkingBoy.fetchCar(parkingTicket);
         Car fetchCar2 = smartParkingBoy.fetchCar(parkingTicket);
         String parkingMessage = smartParkingBoy.getParkingMessage();
@@ -240,14 +240,14 @@ public class ParkingBoyTest {
     public void should_return_no_parkingTicket_when_smartParkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 4; i++) {
-            smartParkingBoy.parkCarByCapacity(new Car());
+            smartParkingBoy.parkCar(new Car());
         }
         Car car5 = new Car();
         Car car6 = new Car();
 
         // when
-        ParkingTicket parkingTicket5 = smartParkingBoy.parkCarByCapacity(car5);
-        ParkingTicket parkingTicket6 = smartParkingBoy.parkCarByCapacity(car6);
+        ParkingTicket parkingTicket5 = smartParkingBoy.parkCar(car5);
+        ParkingTicket parkingTicket6 = smartParkingBoy.parkCar(car6);
         Car fetchCar5 = smartParkingBoy.fetchCar(parkingTicket5);
 
         // then
@@ -271,14 +271,14 @@ public class ParkingBoyTest {
     public void should_return_no_position_message_when_smartParkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 4; i++) {
-            smartParkingBoy.parkCarByCapacity(new Car());
+            smartParkingBoy.parkCar(new Car());
         }
         Car car5 = new Car();
         Car car6 = new Car();
 
         // when
-        ParkingTicket parkingTicket5 = smartParkingBoy.parkCarByCapacity(car5);
-        ParkingTicket parkingTicket6 = smartParkingBoy.parkCarByCapacity(car6);
+        ParkingTicket parkingTicket5 = smartParkingBoy.parkCar(car5);
+        ParkingTicket parkingTicket6 = smartParkingBoy.parkCar(car6);
         String parkingMessage = smartParkingBoy.getParkingMessage();
         Car fetchCar5 = smartParkingBoy.fetchCar(parkingTicket5);
 
@@ -295,7 +295,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = superSmartParkingBoy.parkCarByCapacityRate(car);
+        ParkingTicket parkingTicket = superSmartParkingBoy.parkCar(car);
         Car fetchCar = superSmartParkingBoy.fetchCar(parkingTicket);
 
         // then
@@ -309,8 +309,8 @@ public class ParkingBoyTest {
         Car car2 = new Car();
 
         // when
-        ParkingTicket parkingTicket1 = superSmartParkingBoy.parkCarByCapacityRate(car1);
-        ParkingTicket parkingTicket2 = superSmartParkingBoy.parkCarByCapacityRate(car2);
+        ParkingTicket parkingTicket1 = superSmartParkingBoy.parkCar(car1);
+        ParkingTicket parkingTicket2 = superSmartParkingBoy.parkCar(car2);
         Car fetchCar1 = superSmartParkingBoy.fetchCar(parkingTicket1);
         Car fetchCar2 = superSmartParkingBoy.fetchCar(parkingTicket2);
 
@@ -339,7 +339,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         // when
-        ParkingTicket parkingTicket = superSmartParkingBoy.parkCarByCapacityRate(car);
+        ParkingTicket parkingTicket = superSmartParkingBoy.parkCar(car);
         Car fetchCar1 = superSmartParkingBoy.fetchCar(parkingTicket);
         Car fetchCar2 = superSmartParkingBoy.fetchCar(parkingTicket);
         String parkingMessage = superSmartParkingBoy.getParkingMessage();
@@ -354,14 +354,14 @@ public class ParkingBoyTest {
     public void should_return_no_parkingTicket_when_superSmartParingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 9; i++) {
-            superSmartParkingBoy.parkCarByCapacityRate(new Car());
+            superSmartParkingBoy.parkCar(new Car());
         }
         Car car10 = new Car();
         Car car11 = new Car();
 
         // when
-        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCarByCapacity(car10);
-        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCarByCapacity(car11);
+        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCar(car10);
+        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCar(car11);
         Car fetchCar10 = superSmartParkingBoy.fetchCar(parkingTicket10);
 
         // then
@@ -385,14 +385,14 @@ public class ParkingBoyTest {
     public void should_return_no_position_message_when_superSmartParingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 9; i++) {
-            superSmartParkingBoy.parkCarByCapacity(new Car());
+            superSmartParkingBoy.parkCar(new Car());
         }
         Car car10 = new Car();
         Car car11 = new Car();
 
         // when
-        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCarByCapacity(car10);
-        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCarByCapacity(car11);
+        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCar(car10);
+        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCar(car11);
         String parkingMessage = superSmartParkingBoy.getParkingMessage();
         Car fetchCar10 = superSmartParkingBoy.fetchCar(parkingTicket10);
 
