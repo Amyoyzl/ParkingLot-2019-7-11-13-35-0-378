@@ -115,4 +115,17 @@ public class ParkingBoyTest {
         assertNull(parkingTicket11);
     }
 
+    @Test
+    @DisplayName("should return provide ticket message when parkingBoy fetch car given no parkingTicket")
+    public void should_return_provide_ticket_when_parkingBoy_fetch_car_given_no_parkingTicket() {
+        // given
+        // when
+        Car fetchCar = parkingBoy.fetchCar();
+        String parkingMessage = parkingBoy.getParkingMessage();
+
+        // then
+        assertNull(fetchCar);
+        assertThat(parkingMessage, is("Please provide your parking ticket."));
+    }
+
 }

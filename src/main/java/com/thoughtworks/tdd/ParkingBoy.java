@@ -32,4 +32,9 @@ public class ParkingBoy {
     public String getParkingMessage() {
         return parkingMessage;
     }
+
+    public Car fetchCar() {
+        parkingMessage = "Please provide your parking ticket.";
+        return null;
+    }
 }
