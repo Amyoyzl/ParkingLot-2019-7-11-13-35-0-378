@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLot {
+
     private final int CAPACITY;
     private List<Car> cars = new ArrayList<>();
 
     public ParkingLot(int capacity) {
         this.CAPACITY = capacity;
+    }
+
+    public int getCAPACITY() {
+        return CAPACITY;
     }
 
     public int add(Car car) {

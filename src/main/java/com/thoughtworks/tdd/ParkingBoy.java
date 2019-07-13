@@ -1,7 +1,5 @@
 package com.thoughtworks.tdd;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class ParkingBoy {
@@ -31,6 +29,28 @@ public class ParkingBoy {
             return null;
         }
         return new ParkingTicket(parkingLots.get(index).add(car), index);
+    }
+
+    public ParkingTicket parkCarByCapacityRate(Car car) {
+        int index = indexOfMaxCapacityRate();
+        if(index < 0) {
+            parkingMessage = "Not enough position.";
+            return null;
+        }
+        return new ParkingTicket(parkingLots.get(index).add(car), index);
+    }
+
+    public int indexOfMaxCapacityRate() {
+        double max = 0;
+        int index = -1;
+        for (int i = 0; i < parkingLots.size(); i++) {
+            double capacityRate = (double)parkingLots.get(i).getAvailableCapacity() / parkingLots.get(i).getCAPACITY();
+            if(capacityRate > max) {
+                max = capacityRate;
+                index = i;
+            }
+        }
+        return index;
     }
 
     private int indexOfMaxCapacity() {

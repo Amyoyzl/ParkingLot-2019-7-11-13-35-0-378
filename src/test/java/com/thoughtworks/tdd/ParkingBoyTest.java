@@ -14,6 +14,7 @@ public class ParkingBoyTest {
 
     ParkingBoy parkingBoy;
     ParkingBoy smartParkingBoy;
+    ParkingBoy superSmartParkingBoy;
 
     public ParkingBoyTest () {
         List<ParkingLot> parkingLots = new ArrayList<>();
@@ -25,6 +26,11 @@ public class ParkingBoyTest {
         parkingLots1.add(new ParkingLot(2));
         parkingLots1.add(new ParkingLot(1));
         smartParkingBoy = new ParkingBoy(parkingLots1);
+        List<ParkingLot> parkingLots2 = new ArrayList<>();
+        parkingLots2.add(new ParkingLot(4));
+        parkingLots2.add(new ParkingLot(3));
+        parkingLots2.add(new ParkingLot(3));
+        superSmartParkingBoy = new ParkingBoy(parkingLots2);
     }
 
     @Test
@@ -283,6 +289,117 @@ public class ParkingBoyTest {
 
     }
 
+    @Test
+    public void should_return_car_when_superSmartParingBoy_fetch_car_given_parkingTicket() {
+        // given
+        Car car = new Car();
 
+        // when
+        ParkingTicket parkingTicket = superSmartParkingBoy.parkCarByCapacityRate(car);
+        Car fetchCar = superSmartParkingBoy.fetchCar(parkingTicket);
+
+        // then
+        assertThat(fetchCar, is(car));
+    }
+
+    @Test
+    public void should_return_cars_when_superSmartParingBoy_fetch_cars_given_parkingTickets() {
+        // given
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        // when
+        ParkingTicket parkingTicket1 = superSmartParkingBoy.parkCarByCapacityRate(car1);
+        ParkingTicket parkingTicket2 = superSmartParkingBoy.parkCarByCapacityRate(car2);
+        Car fetchCar1 = superSmartParkingBoy.fetchCar(parkingTicket1);
+        Car fetchCar2 = superSmartParkingBoy.fetchCar(parkingTicket2);
+
+        // then
+        assertThat(fetchCar1, is(car1));
+        assertThat(fetchCar2, is(car2));
+    }
+
+    @Test
+    public void should_return_no_car_when_superSmartParingBoy_fetch_car_given_wrong_parkingTicket() {
+        // given
+        ParkingTicket parkingTicket = new ParkingTicket(3, 0);
+
+        // when
+        Car fetchCar = superSmartParkingBoy.fetchCar(parkingTicket);
+        String parkingMessage = superSmartParkingBoy.getParkingMessage();
+
+        // then
+        assertNull(fetchCar);
+        assertThat(parkingMessage, is("Unrecognized parking ticket."));
+    }
+
+    @Test
+    public void should_return_no_car_when_superSmartParingBoy_fetch_car_given_used_parkingTicket() {
+        // given
+        Car car = new Car();
+
+        // when
+        ParkingTicket parkingTicket = superSmartParkingBoy.parkCarByCapacityRate(car);
+        Car fetchCar1 = superSmartParkingBoy.fetchCar(parkingTicket);
+        Car fetchCar2 = superSmartParkingBoy.fetchCar(parkingTicket);
+        String parkingMessage = superSmartParkingBoy.getParkingMessage();
+
+        // then
+        assertThat(fetchCar1, is(car));
+        assertNull(fetchCar2);
+        assertThat(parkingMessage, is("Unrecognized parking ticket."));
+    }
+
+    @Test
+    public void should_return_no_parkingTicket_when_superSmartParingBoy_park_car_has_no_position_in_parkingLot() {
+        // given
+        for (int i = 0; i < 9; i++) {
+            superSmartParkingBoy.parkCarByCapacityRate(new Car());
+        }
+        Car car10 = new Car();
+        Car car11 = new Car();
+
+        // when
+        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCarByCapacity(car10);
+        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCarByCapacity(car11);
+        Car fetchCar10 = superSmartParkingBoy.fetchCar(parkingTicket10);
+
+        // then
+        assertThat(fetchCar10, is(car10));
+        assertNull(parkingTicket11);
+    }
+
+    @Test
+    public void should_return_provide_ticket_when_superSmartParingBoy_fetch_car_given_no_parkingTicket() {
+        // given
+        // when
+        Car fetchCar = superSmartParkingBoy.fetchCar();
+        String parkingMessage = superSmartParkingBoy.getParkingMessage();
+
+        // then
+        assertNull(fetchCar);
+        assertThat(parkingMessage, is("Please provide your parking ticket."));
+    }
+
+    @Test
+    public void should_return_no_position_message_when_superSmartParingBoy_park_car_has_no_position_in_parkingLot() {
+        // given
+        for (int i = 0; i < 9; i++) {
+            superSmartParkingBoy.parkCarByCapacity(new Car());
+        }
+        Car car10 = new Car();
+        Car car11 = new Car();
+
+        // when
+        ParkingTicket parkingTicket10 = superSmartParkingBoy.parkCarByCapacity(car10);
+        ParkingTicket parkingTicket11 = superSmartParkingBoy.parkCarByCapacity(car11);
+        String parkingMessage = superSmartParkingBoy.getParkingMessage();
+        Car fetchCar10 = superSmartParkingBoy.fetchCar(parkingTicket10);
+
+        // then
+        assertThat(fetchCar10, is(car10));
+        assertNull(parkingTicket11);
+        assertThat(parkingMessage, is("Not enough position."));
+    }
 
 }
