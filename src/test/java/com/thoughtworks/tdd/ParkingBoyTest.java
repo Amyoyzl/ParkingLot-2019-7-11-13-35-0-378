@@ -53,9 +53,11 @@ public class ParkingBoyTest {
 
         // when
         Car fetchCar = parkingBoy.fetchCar(parkingTicket);
+        String parkingMessage = parkingBoy.getParkingMessage();
 
         // then
         assertNull(fetchCar);
+        assertThat(parkingMessage, is("Unrecognized parking ticket."));
     }
 
     @Test
@@ -68,10 +70,12 @@ public class ParkingBoyTest {
         ParkingTicket parkingTicket = parkingBoy.parkCar(car);
         Car fetchCar1 = parkingBoy.fetchCar(parkingTicket);
         Car fetchCar2 = parkingBoy.fetchCar(parkingTicket);
+        String parkingMessage = parkingBoy.getParkingMessage();
 
         // then
         assertThat(fetchCar1, is(car));
         assertNull(fetchCar2);
+        assertThat(parkingMessage, is("Unrecognized parking ticket."));
     }
 
     @Test

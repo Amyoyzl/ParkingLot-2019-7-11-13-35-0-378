@@ -21,10 +21,17 @@ public class ParkingLot {
     }
 
     public Car push(ParkingTicket parkingTicket) {
-        int id = parkingTicket.getId();
-        if (id >= 0 && id < cars.size()) {
+        if (isParkingTicketValid(parkingTicket)) {
             return cars.get(parkingTicket.getId());
         }
         return null;
+    }
+
+    public boolean isParkingTicketValid (ParkingTicket parkingTicket) {
+        int id = parkingTicket.getId();
+        if (id >= 0 && id < cars.size()) {
+            return true;
+        }
+        return false;
     }
 }
