@@ -43,4 +43,17 @@ public abstract class ParkingPerson {
             return null;
         }
     }
+
+    public int indexOfMaxCapacityRate() {
+        double max = 0;
+        int index = -1;
+        for (int i = 0; i < getParkingLots().size(); i++) {
+            double capacityRate = (double)getParkingLots().get(i).getAvailableCapacity() / getParkingLots().get(i).getCAPACITY();
+            if(capacityRate > max) {
+                max = capacityRate;
+                index = i;
+            }
+        }
+        return index;
+    }
 }
