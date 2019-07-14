@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import java.util.List;
 
 public abstract class ParkingPerson {
+
     private List<ParkingLot> parkingLots;
     private String parkingMessage;
 

@@ -1,6 +1,5 @@
 package com.thoughtworks.tdd;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,12 +15,24 @@ public class ParkingManagerTest {
 
     public ParkingManagerTest() {
         List<ParkingLot> parkingLots = new ArrayList<>();
-        parkingLots.add(new ParkingLot(10));
-        parkingLots.add(new ParkingLot(4));
-        parkingLots.add(new ParkingLot(6));
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
-        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
+        List<ParkingLot> parkingLots1 = new ArrayList<>();
+        parkingLots1.add(new ParkingLot(10));
+        parkingLots1.add(new ParkingLot(4));
+        parkingLots1.add(new ParkingLot(6));
+        List<ParkingLot> parkingLots2 = new ArrayList<>();
+        parkingLots2.add(new ParkingLot(8));
+        parkingLots2.add(new ParkingLot(4));
+        parkingLots2.add(new ParkingLot(8));
+        List<ParkingLot> parkingLots3 = new ArrayList<>();
+        parkingLots3.add(new ParkingLot(6));
+        parkingLots3.add(new ParkingLot(8));
+        parkingLots3.add(new ParkingLot(6));
+        parkingLots.addAll(parkingLots1);
+        parkingLots.addAll(parkingLots2);
+        parkingLots.addAll(parkingLots3);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots1);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots2);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots3);
         List<ParkingPerson> parkingPeople = new ArrayList<>();
         parkingPeople.add(parkingBoy);
         parkingPeople.add(smartParkingBoy);
@@ -36,7 +47,7 @@ public class ParkingManagerTest {
 
         // when
         ParkingTicket parkingTicket = manager.makeParkingBoyParkCar(0, car);
-        Car fetchCar = manager.makeParkingBoyFetchCar(1, parkingTicket);
+        Car fetchCar = manager.makeParkingBoyFetchCar(0, parkingTicket);
 
         // then
         assertThat(fetchCar, is(car));
@@ -46,16 +57,16 @@ public class ParkingManagerTest {
     public void should_return_no_position_message_when_parkingBoy_park_car_has_no_position_in_parkingLot() {
         // given
         for (int i = 0; i < 19; i++) {
-            manager.makeParkingBoyParkCar(0, new Car());
+            manager.makeParkingBoyParkCar(1, new Car());
         }
         Car car20 = new Car();
         Car car21 = new Car();
 
         // when
         ParkingTicket parkingTicket20 = manager.makeParkingBoyParkCar(1, car20);
-        ParkingTicket parkingTicket21 = manager.makeParkingBoyParkCar(2, car21);
+        ParkingTicket parkingTicket21 = manager.makeParkingBoyParkCar(1, car21);
         String parkingMessage = manager.getParkingMessage();
-        Car fetchCar20 = manager.makeParkingBoyFetchCar(0, parkingTicket20);
+        Car fetchCar20 = manager.makeParkingBoyFetchCar(1, parkingTicket20);
 
         // then
         assertThat(fetchCar20, is(car20));
@@ -77,7 +88,6 @@ public class ParkingManagerTest {
         assertNull(fetchCar);
         assertThat(parkingMessage, is("Unrecognized parking ticket."));
     }
-
 
     @Test
     public void should_return_car_when_manager_fetch_car_given_parkingTicket() {
@@ -144,20 +154,20 @@ public class ParkingManagerTest {
     @Test
     public void should_return_no_parkingTicket_when_manager_park_car_has_no_position_in_parkingLot() {
         // given
-        for (int i = 0; i < 19; i++) {
+        for (int i = 0; i < 59; i++) {
             manager.parkCar(new Car());
         }
-        Car car20 = new Car();
-        Car car21 = new Car();
+        Car car60 = new Car();
+        Car car61 = new Car();
 
         // when
-        ParkingTicket parkingTicket20 = manager.parkCar(car20);
-        ParkingTicket parkingTicket21 = manager.parkCar(car21);
-        Car fetchCar20 = manager.fetchCar(parkingTicket20);
+        ParkingTicket parkingTicket60 = manager.parkCar(car60);
+        ParkingTicket parkingTicket61 = manager.parkCar(car61);
+        Car fetchCar60 = manager.fetchCar(parkingTicket60);
 
         // then
-        assertThat(fetchCar20, is(car20));
-        assertNull(parkingTicket21);
+        assertThat(fetchCar60, is(car60));
+        assertNull(parkingTicket61);
     }
 
     @Test
@@ -175,21 +185,21 @@ public class ParkingManagerTest {
     @Test
     public void should_return_no_position_message_when_manager_park_car_has_no_position_in_parkingLot() {
         // given
-        for (int i = 0; i < 19; i++) {
+        for (int i = 0; i < 59; i++) {
             manager.parkCar(new Car());
         }
-        Car car20 = new Car();
-        Car car21 = new Car();
+        Car car60 = new Car();
+        Car car61 = new Car();
 
         // when
-        ParkingTicket parkingTicket20 = manager.parkCar(car20);
-        ParkingTicket parkingTicket21 = manager.parkCar(car21);
+        ParkingTicket parkingTicket60 = manager.parkCar(car60);
+        ParkingTicket parkingTicket61 = manager.parkCar(car61);
         String parkingMessage = manager.getParkingMessage();
-        Car fetchCar20 = manager.fetchCar(parkingTicket20);
+        Car fetchCar60 = manager.fetchCar(parkingTicket60);
 
         // then
-        assertThat(fetchCar20, is(car20));
-        assertNull(parkingTicket21);
+        assertThat(fetchCar60, is(car60));
+        assertNull(parkingTicket61);
         assertThat(parkingMessage, is("Not enough position."));
 
     }
