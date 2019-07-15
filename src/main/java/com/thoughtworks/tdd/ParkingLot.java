@@ -1,43 +1,47 @@
 package com.thoughtworks.tdd;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.thoughtworks.tdd.excception.UnrecognizedTicketException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParkingLot {
 
     private final int CAPACITY;
-    private List<Car> cars = new ArrayList<>();
+    private Map<Ticket, Car> ticketCarMap;
 
     public ParkingLot(int capacity) {
         this.CAPACITY = capacity;
+        ticketCarMap = new HashMap<>(CAPACITY);
     }
 
-    public int getCAPACITY() {
-        return CAPACITY;
-    }
-
-    public int add(Car car) {
-        if (getAvailableCapacity() > 0) {
-            if (cars.add(car)) {
-                return cars.size() - 1;
-            }
-        }
-        return -1;
-    }
-
-    public int getAvailableCapacity() {
-        return CAPACITY - cars.size();
-    }
-
-    public Car push(int position) {
-        if (isParkingTicketValid(position)) {
-            return cars.get(position);
+    public Ticket park(Car car) {
+        if (getAvailablePosition() > 0) {
+            Ticket ticket = new Ticket();
+            ticketCarMap.put(ticket, car);
+            return ticket;
         }
         return null;
     }
 
-    public boolean isParkingTicketValid (int position) {
-        if (position >= 0 && position < cars.size()) {
+    public int getAvailablePosition() {
+        return CAPACITY - ticketCarMap.size();
+    }
+
+    public double getAvailablePositionRate() {
+        return getAvailablePosition() / (double)CAPACITY;
+    }
+
+    public Car fetch(Ticket ticket) {
+        if (isContainTicket(ticket)) {
+            return ticketCarMap.remove(ticket);
+        } else {
+            throw new UnrecognizedTicketException();
+        }
+    }
+
+    public boolean isContainTicket(Ticket ticket) {
+        if (ticketCarMap.containsKey(ticket)) {
             return true;
         }
         return false;

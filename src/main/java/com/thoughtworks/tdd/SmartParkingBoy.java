@@ -1,33 +1,45 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.excception.NotEnoughPositionException;
+import com.thoughtworks.tdd.excception.TicketMissingException;
+import com.thoughtworks.tdd.excception.UnrecognizedTicketException;
+
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
-public class SmartParkingBoy extends ParkingPerson {
+public class SmartParkingBoy {
 
-    public SmartParkingBoy(List<ParkingLot> parkingLots) {
-        super(parkingLots);
+    private List<ParkingLot> parkingLots;
+
+    public SmartParkingBoy(ParkingLot... parkingLots) {
+        this.parkingLots = Arrays.asList(parkingLots);
     }
 
-    @Override
-    public ParkingTicket parkCar(Car car) {
-        int index = indexOfMaxCapacity();
-        if(index < 0) {
-            setParkingMessage("Not enough position.");
-            return null;
+    public Ticket park(Car car) {
+        boolean isAllFull = parkingLots.stream().allMatch(parkingLot -> parkingLot.getAvailablePosition() == 0);
+        if (isAllFull) {
+            throw new NotEnoughPositionException();
         }
-        return new ParkingTicket(getParkingLots().get(index).add(car), index);
-    }
-
-    private int indexOfMaxCapacity() {
-        int max = 0;
-        int index = -1;
-        for (int i = 0; i < getParkingLots().size(); i++) {
-            int capacity = getParkingLots().get(i).getAvailableCapacity();
-            if(capacity > max) {
-                max = capacity;
-                index = i;
+        ParkingLot firstAvailableParkingLot = parkingLots.stream().max(new Comparator<ParkingLot>() {
+            @Override
+            public int compare(ParkingLot o1, ParkingLot o2) {
+                return o1.getAvailablePosition() - o2.getAvailablePosition();
             }
-        }
-        return index;
+        }).get();
+        return firstAvailableParkingLot.park(car);
     }
+
+    public Car fetch(Ticket ticket) {
+        if (ticket == null) {
+            throw new TicketMissingException();
+        }
+        boolean isContainTicket = parkingLots.stream().allMatch(parkingLot -> parkingLot.isContainTicket(ticket));
+        if (isContainTicket) {
+            ParkingLot firstAvailableParkingLot = parkingLots.stream().filter(parkingLot -> parkingLot.isContainTicket(ticket)).findFirst().get();
+            return firstAvailableParkingLot.fetch(ticket);
+        }
+        throw new UnrecognizedTicketException();
+    }
+
 }
